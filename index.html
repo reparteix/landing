@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Reparteix – Reparteix despeses fàcilment, sense comptes ni núvol</title>
+  <meta name="description" content="Reparteix és l'alternativa simple a Splitwise. Gestiona despeses compartides amb amics, parella o pis compartit. Funciona offline, sense registre i les dades queden al teu dispositiu." />
+  <link rel="canonical" href="https://reparteix.cat/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://reparteix.cat/" />
+  <meta property="og:title" content="Reparteix – Reparteix despeses fàcilment, sense comptes ni núvol" />
+  <meta property="og:description" content="Alternativa simple a Splitwise. Offline, privat i instal·lable al mòbil. Sense registre." />
+  <meta property="og:image" content="https://reparteix.cat/og-image.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Reparteix – Reparteix despeses sense complicar-te" />
+  <meta name="twitter:description" content="Alternativa simple a Splitwise. Offline, privat i instal·lable al mòbil. Sense registre." />
+  <meta name="twitter:image" content="https://reparteix.cat/og-image.png" />
+
+  <style>
+    /* =============================================
+       RESET & BASE
+       ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand:       #4F46E5;
+      --brand-dark:  #3730A3;
+      --brand-light: #EEF2FF;
+      --accent:      #06B6D4;
+      --text:        #1E293B;
+      --muted:       #64748B;
+      --surface:     #F8FAFC;
+      --white:       #FFFFFF;
+      --border:      #E2E8F0;
+      --radius:      12px;
+      --shadow-sm:   0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --shadow-md:   0 4px 6px -1px rgba(0,0,0,.10), 0 2px 4px -1px rgba(0,0,0,.06);
+      --shadow-lg:   0 10px 15px -3px rgba(0,0,0,.10), 0 4px 6px -2px rgba(0,0,0,.05);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* =============================================
+       LAYOUT HELPERS
+       ============================================= */
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .section { padding: 5rem 0; }
+    .section--alt { background: var(--surface); }
+
+    .section-label {
+      display: inline-block;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--brand);
+      background: var(--brand-light);
+      padding: .25rem .75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .section-header { margin-bottom: 3rem; }
+    .section-header--center { text-align: center; }
+    .section-header--center .section-subtitle { margin: 0 auto; }
+
+    /* =============================================
+       BUTTONS
+       ============================================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .75rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all .2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--brand);
+      color: var(--white);
+      border-color: var(--brand);
+    }
+    .btn-primary:hover { background: var(--brand-dark); border-color: var(--brand-dark); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--brand);
+      border-color: var(--brand);
+    }
+    .btn-secondary:hover { background: var(--brand-light); transform: translateY(-1px); }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--brand);
+    }
+    .btn-white:hover { background: var(--brand-light); transform: translateY(-1px); }
+
+    .btn-lg { padding: 1rem 2rem; font-size: 1.125rem; border-radius: 14px; }
+
+    /* =============================================
+       NAV
+       ============================================= */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav__logo {
+      display: flex;
+      align-items: center;
+      gap: .625rem;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--brand);
+    }
+
+    .nav__logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--brand);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.1rem;
+    }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav__links a {
+      font-size: .9375rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .nav__links a:hover { color: var(--brand); }
+
+    .nav__cta { margin-left: .5rem; }
+
+    /* Mobile nav toggle */
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: .5rem;
+      background: none;
+      border: none;
+    }
+    .nav__hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all .2s;
+    }
+
+    /* =============================================
+       HERO
+       ============================================= */
+    .hero {
+      background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #06B6D4 100%);
+      padding: 6rem 0 5rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero__inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(8px);
+      color: white;
+      font-size: .8125rem;
+      font-weight: 600;
+      padding: .375rem .875rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.25);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero__title {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: white;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero__title em {
+      font-style: normal;
+      color: #A5F3FC;
+    }
+
+    .hero__subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,.85);
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+
+    .hero__ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hero__trust {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .hero__trust-item {
+      display: flex;
+      align-items: center;
+      gap: .375rem;
+      color: rgba(255,255,255,.8);
+      font-size: .875rem;
+      font-weight: 500;
+    }
+
+    .hero__trust-item svg { flex-shrink: 0; }
+
+    /* App mockup placeholder */
+    .hero__mockup {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mockup-phone {
+      width: 260px;
+      background: white;
+      border-radius: 30px;
+      padding: 1.5rem 1.25rem;
+      box-shadow: 0 25px 60px rgba(0,0,0,.35);
+      position: relative;
+    }
+
+    .mockup-phone::before {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 6px;
+      background: #E2E8F0;
+      border-radius: 999px;
+      margin: 0 auto 1.25rem;
+    }
+
+    .mockup-header {
+      display: flex;
+      align-items: center;
+      gap: .625rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .mockup-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .mockup-group-name { font-weight: 700; font-size: .9375rem; color: var(--text); }
+    .mockup-group-sub { font-size: .75rem; color: var(--muted); }
+
+    .mockup-balance-card {
+      background: linear-gradient(135deg, #4F46E5, #7C3AED);
+      color: white;
+      border-radius: 14px;
+      padding: 1rem 1.125rem;
+      margin-bottom: 1rem;
+    }
+
+    .mockup-balance-label { font-size: .75rem; opacity: .8; margin-bottom: .25rem; }
+    .mockup-balance-amount { font-size: 1.5rem; font-weight: 800; }
+
+    .mockup-expense {
+      display: flex;
+      align-items: center;
+      gap: .625rem;
+      padding: .625rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mockup-expense:last-child { border-bottom: none; }
+
+    .mockup-expense-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
+      flex-shrink: 0;
+    }
+
+    .mockup-expense-name { font-size: .8125rem; font-weight: 600; color: var(--text); }
+    .mockup-expense-who { font-size: .6875rem; color: var(--muted); }
+    .mockup-expense-amount { margin-left: auto; font-size: .875rem; font-weight: 700; color: var(--text); }
+
+    /* =============================================
+       PROBLEM / SOLUTION
+       ============================================= */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .problem-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .problem-card--negative { border-color: #FEE2E2; background: #FFF5F5; }
+    .problem-card--positive { border-color: #D1FAE5; background: #F0FFF4; }
+
+    .problem-card__icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .problem-card__title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: .75rem;
+    }
+
+    .problem-card__list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+
+    .problem-card__list li {
+      display: flex;
+      align-items: flex-start;
+      gap: .625rem;
+      font-size: .9375rem;
+      color: var(--muted);
+    }
+
+    .problem-card__list li::before {
+      content: attr(data-icon);
+      flex-shrink: 0;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    /* =============================================
+       FEATURES
+       ============================================= */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .feature-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+
+    .feature-card__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      background: var(--brand-light);
+    }
+
+    .feature-card__title {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
+      color: var(--text);
+    }
+
+    .feature-card__desc {
+      font-size: .9375rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* =============================================
+       HOW IT WORKS
+       ============================================= */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: calc(16.66% + 28px);
+      right: calc(16.66% + 28px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--brand), var(--accent));
+      z-index: 0;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step__number {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: white;
+      font-size: 1.375rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 0 0 6px var(--brand-light);
+    }
+
+    .step__title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
+    }
+
+    .step__desc {
+      font-size: .9375rem;
+      color: var(--muted);
+    }
+
+    /* =============================================
+       ADVANTAGES
+       ============================================= */
+    .advantages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .advantage-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .advantage-card__icon {
+      font-size: 1.75rem;
+      flex-shrink: 0;
+      margin-top: .125rem;
+    }
+
+    .advantage-card__title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: .25rem;
+    }
+
+    .advantage-card__desc {
+      font-size: .875rem;
+      color: var(--muted);
+    }
+
+    /* =============================================
+       FAQ
+       ============================================= */
+    .faq-list {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+
+    .faq-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 1.25rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: background .15s;
+    }
+
+    .faq-question:hover { background: var(--surface); }
+
+    .faq-question__icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--brand-light);
+      color: var(--brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: transform .2s;
+    }
+
+    .faq-item.open .faq-question__icon { transform: rotate(45deg); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease, padding .3s ease;
+      font-size: .9375rem;
+      color: var(--muted);
+      padding: 0 1.5rem;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+      padding: 0 1.5rem 1.25rem;
+    }
+
+    /* =============================================
+       CTA BANNER
+       ============================================= */
+    .cta-banner {
+      background: linear-gradient(135deg, #4F46E5, #7C3AED);
+      border-radius: 24px;
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M20 20.5V18H0v5h5v5H0v5h20v-9.5zm-2 4.5h-1v-1h1v1zm-3 0h-1v-1h1v1zm-3 0h-1v-1h1v1zm-3 0h-1v-1h1v1zm12 0h-1v-1h1v1z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .cta-banner__title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: white;
+      margin-bottom: .75rem;
+      position: relative;
+    }
+
+    .cta-banner__subtitle {
+      font-size: 1.125rem;
+      color: rgba(255,255,255,.8);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .cta-banner__buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    /* =============================================
+       FOOTER
+       ============================================= */
+    .footer {
+      background: var(--text);
+      color: rgba(255,255,255,.7);
+      padding: 3rem 0 2rem;
+    }
+
+    .footer__inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer__brand-name {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: .75rem;
+    }
+
+    .footer__brand-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--brand);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .footer__brand-desc {
+      font-size: .875rem;
+      line-height: 1.6;
+    }
+
+    .footer__col-title {
+      font-size: .875rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .footer__links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+
+    .footer__links a {
+      font-size: .9rem;
+      color: rgba(255,255,255,.65);
+      transition: color .2s;
+    }
+    .footer__links a:hover { color: white; }
+
+    .footer__bottom {
+      border-top: 1px solid rgba(255,255,255,.1);
+      padding-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: .8125rem;
+    }
+
+    .footer__license {
+      display: flex;
+      align-items: center;
+      gap: .375rem;
+    }
+
+    /* =============================================
+       RESPONSIVE
+       ============================================= */
+    @media (max-width: 768px) {
+      .section { padding: 3.5rem 0; }
+
+      .nav__links,
+      .nav__cta { display: none; }
+      .nav__hamburger { display: flex; }
+
+      .nav__mobile-menu {
+        display: none;
+        flex-direction: column;
+        gap: .25rem;
+        padding: 1rem 1.25rem 1.5rem;
+        border-top: 1px solid var(--border);
+        background: white;
+      }
+
+      .nav__mobile-menu.open { display: flex; }
+
+      .nav__mobile-menu a {
+        padding: .625rem 0;
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--muted);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav__mobile-menu .btn {
+        margin-top: .75rem;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .hero { padding: 3.5rem 0 3rem; }
+      .hero__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero__mockup { order: -1; }
+      .mockup-phone { width: 230px; }
+
+      .problem-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .steps::before { display: none; }
+      .step { flex-direction: row; text-align: left; gap: 1rem; align-items: flex-start; }
+      .step__number { margin-bottom: 0; flex-shrink: 0; width: 44px; height: 44px; font-size: 1.125rem; }
+
+      .footer__inner { grid-template-columns: 1fr; }
+      .footer__bottom { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero__ctas { flex-direction: column; }
+      .hero__ctas .btn { width: 100%; justify-content: center; }
+      .cta-banner__buttons .btn { width: 100%; justify-content: center; }
+      .features-grid { grid-template-columns: 1fr; }
+      .advantages-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav class="nav" aria-label="Navegació principal">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Reparteix – inici">
+        <div class="nav__logo-icon" aria-hidden="true">💸</div>
+        Reparteix
+      </a>
+
+      <ul class="nav__links">
+        <li><a href="#funcionalitats">Funcionalitats</a></li>
+        <li><a href="#com-funciona">Com funciona</a></li>
+        <li><a href="#avantatges">Avantatges</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+
+      <a href="https://pilipilisbot.github.io/reparteix/" target="_blank" rel="noopener"
+         class="btn btn-primary nav__cta">
+        Prova-la gratis →
+      </a>
+
+      <button class="nav__hamburger" aria-label="Obrir menú" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="nav__mobile-menu" id="mobileMenu">
+      <a href="#funcionalitats" onclick="closeMenu()">Funcionalitats</a>
+      <a href="#com-funciona" onclick="closeMenu()">Com funciona</a>
+      <a href="#avantatges" onclick="closeMenu()">Avantatges</a>
+      <a href="#faq" onclick="closeMenu()">FAQ</a>
+      <a href="https://pilipilisbot.github.io/reparteix/" target="_blank" rel="noopener"
+         class="btn btn-primary" onclick="closeMenu()">Prova-la gratis →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<header class="hero" id="inici">
+  <div class="container">
+    <div class="hero__inner">
+      <div class="hero__content">
+        <div class="hero__badge" aria-label="Destacat">
+          <span aria-hidden="true">✨</span> Alternativa simple a Splitwise
+        </div>
+
+        <h1 class="hero__title">
+          Reparteix despeses <em>sense complicar-te</em>
+        </h1>
+
+        <p class="hero__subtitle">
+          Gestiona qui deu a qui en grups d'amics, pisos compartits o viatges.
+          Sense registre, sense núvol: tot queda al teu dispositiu.
+        </p>
+
+        <div class="hero__ctas">
+          <a href="https://pilipilisbot.github.io/reparteix/" target="_blank" rel="noopener"
+             class="btn btn-white btn-lg">
+            <span aria-hidden="true">🚀</span> Prova-la ara
+          </a>
+          <a href="#funcionalitats" class="btn btn-lg"
+             style="color:white; border:2px solid rgba(255,255,255,.5);">
+            Veure funcionalitats
+          </a>
+        </div>
+
+        <div class="hero__trust" role="list">
+          <div class="hero__trust-item" role="listitem">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            100% gratuït
+          </div>
+          <div class="hero__trust-item" role="listitem">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            Sense registre
+          </div>
+          <div class="hero__trust-item" role="listitem">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            Funciona offline
+          </div>
+          <div class="hero__trust-item" role="listitem">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            Instal·lable al mòbil
+          </div>
+        </div>
+      </div>
+
+      <!-- App mockup -->
+      <div class="hero__mockup" aria-hidden="true">
+        <div class="mockup-phone" role="img" aria-label="Previsualització de l'app Reparteix">
+          <div class="mockup-header">
+            <div class="mockup-avatar" style="background:#EEF2FF; font-size:1.25rem;">🏖️</div>
+            <div>
+              <div class="mockup-group-name">Viatge a Roma</div>
+              <div class="mockup-group-sub">4 persones · EUR</div>
+            </div>
+          </div>
+
+          <div class="mockup-balance-card">
+            <div class="mockup-balance-label">El teu saldo</div>
+            <div class="mockup-balance-amount">+23,50 €</div>
+          </div>
+
+          <div class="mockup-expense">
+            <div class="mockup-expense-icon" style="background:#FEF9C3;">🍕</div>
+            <div>
+              <div class="mockup-expense-name">Sopar pizzeria</div>
+              <div class="mockup-expense-who">Pagat per Marc</div>
+            </div>
+            <div class="mockup-expense-amount">48,00 €</div>
+          </div>
+
+          <div class="mockup-expense">
+            <div class="mockup-expense-icon" style="background:#DCFCE7;">🚌</div>
+            <div>
+              <div class="mockup-expense-name">Bus aeroport</div>
+              <div class="mockup-expense-who">Pagat per Anna</div>
+            </div>
+            <div class="mockup-expense-amount">16,00 €</div>
+          </div>
+
+          <div class="mockup-expense">
+            <div class="mockup-expense-icon" style="background:#EEF2FF;">🏨</div>
+            <div>
+              <div class="mockup-expense-name">Hotel (2 nits)</div>
+              <div class="mockup-expense-who">Pagat per tu</div>
+            </div>
+            <div class="mockup-expense-amount">220,00 €</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     PROBLEMA / SOLUCIÓ
+     ============================================================ -->
+<section class="section section--alt" aria-labelledby="problema-title">
+  <div class="container">
+    <div class="section-header section-header--center">
+      <div class="section-label">El problema i la solució</div>
+      <h2 class="section-title" id="problema-title">Repartir despeses no hauria de ser tan complicat</h2>
+      <p class="section-subtitle">
+        Prou de missatges de WhatsApp, càlculs en papers o apps que et demanen crear un compte.
+      </p>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-card problem-card--negative">
+        <div class="problem-card__icon" aria-hidden="true">😤</div>
+        <h3 class="problem-card__title" style="color:#DC2626;">Com sol passar ara</h3>
+        <ul class="problem-card__list">
+          <li data-icon="❌">Missatges de WhatsApp interminables per veure qui deu a qui</li>
+          <li data-icon="❌">Apps que et obliguen a registrar-te i crear un compte</li>
+          <li data-icon="❌">Les dades viatgen a servidors externs sense control</li>
+          <li data-icon="❌">Càlculs a mà que sovint surten malament</li>
+          <li data-icon="❌">Sense internet, no hi ha accés</li>
+        </ul>
+      </div>
+
+      <div class="problem-card problem-card--positive">
+        <div class="problem-card__icon" aria-hidden="true">😌</div>
+        <h3 class="problem-card__title" style="color:#16A34A;">Amb Reparteix</h3>
+        <ul class="problem-card__list">
+          <li data-icon="✅">Tot clar i centralitzat: balanços en temps real</li>
+          <li data-icon="✅">Obre l'app i comença a usar-la, sense registre</li>
+          <li data-icon="✅">Les dades queden al teu dispositiu, sota el teu control</li>
+          <li data-icon="✅">Càlcul automàtic de transferències mínimes</li>
+          <li data-icon="✅">Funciona sense connexió a internet</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FUNCIONALITATS
+     ============================================================ -->
+<section class="section" id="funcionalitats" aria-labelledby="funcionalitats-title">
+  <div class="container">
+    <div class="section-header section-header--center">
+      <div class="section-label">Funcionalitats</div>
+      <h2 class="section-title" id="funcionalitats-title">Tot el que necessites per repartir despeses</h2>
+      <p class="section-subtitle">Dissenyat per ser simple i potent a la vegada, sense corba d'aprenentatge.</p>
+    </div>
+
+    <div class="features-grid" role="list">
+
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">👥</div>
+        <h3 class="feature-card__title">Crear grups</h3>
+        <p class="feature-card__desc">
+          Crea grups amb nom, icona i moneda (EUR, USD, GBP…). Afegeix membres en
+          segons. Perfecte per a viatges, pis compartit, amics o parella.
+        </p>
+      </article>
+
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">💳</div>
+        <h3 class="feature-card__title">Afegir despeses compartides</h3>
+        <p class="feature-card__desc">
+          Registra qualsevol despesa, indica qui ha pagat i reparteix-la entre els
+          membres que correspongui. Repartiment igual o proporcional, tu tries.
+        </p>
+      </article>
+
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">🧾</div>
+        <h3 class="feature-card__title">Adjuntar rebut</h3>
+        <p class="feature-card__desc">
+          Fes una foto al rebut o selecciona una imatge de la galeria i adjunta-la
+          a la despesa. Sense discussions posteriors sobre quant va costar.
+        </p>
+      </article>
+
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">⚖️</div>
+        <h3 class="feature-card__title">Càlcul automàtic de balanços</h3>
+        <p class="feature-card__desc">
+          L'app calcula automàticament qui deu a qui i minimitza el nombre de
+          transferències necessàries per liquidar-ho tot.
+        </p>
+      </article>
+
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">💸</div>
+        <h3 class="feature-card__title">Registrar pagaments</h3>
+        <p class="feature-card__desc">
+          Anota quan algú fa un pagament i veu el saldo actualitzat al moment.
+          Tot l'historial centralitzat en un sol lloc.
+        </p>
+      </article>
+
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">💾</div>
+        <h3 class="feature-card__title">Exportar i importar dades</h3>
+        <p class="feature-card__desc">
+          Fes una còpia de seguretat en format JSON i importa-la en qualsevol
+          dispositiu. Migrar o fer backup és qüestió de segons.
+        </p>
+      </article>
+
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">📱</div>
+        <h3 class="feature-card__title">PWA instal·lable</h3>
+        <p class="feature-card__desc">
+          Instal·la Reparteix al teu mòbil o escriptori com si fos una app nativa.
+          Accés ràpid des de la pantalla d'inici, sense obrir el navegador.
+        </p>
+      </article>
+
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">🔒</div>
+        <h3 class="feature-card__title">Privacitat local-first</h3>
+        <p class="feature-card__desc">
+          Les dades es guarden al teu navegador. Cap servidor extern, cap
+          compte necessari. La teva informació és només teva.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     COM FUNCIONA
+     ============================================================ -->
+<section class="section section--alt" id="com-funciona" aria-labelledby="com-funciona-title">
+  <div class="container">
+    <div class="section-header section-header--center">
+      <div class="section-label">Com funciona</div>
+      <h2 class="section-title" id="com-funciona-title">Liquidat en 3 passos</h2>
+      <p class="section-subtitle">
+        No cal manual. Crea un grup, afegeix les despeses i l'app et diu exactament qui ha de pagar a qui.
+      </p>
+    </div>
+
+    <ol class="steps" aria-label="Passos per usar Reparteix">
+      <li class="step">
+        <div class="step__number" aria-hidden="true">1</div>
+        <div>
+          <h3 class="step__title">Crea el grup</h3>
+          <p class="step__desc">
+            Posa-li un nom i una icona al grup (per exemple "Viatge a Lisboa 🏖️"),
+            tria la moneda i afegeix els membres que participen.
+          </p>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step__number" aria-hidden="true">2</div>
+        <div>
+          <h3 class="step__title">Afegeix les despeses</h3>
+          <p class="step__desc">
+            Cada vegada que algú pagui alguna cosa, registra-ho en 10 segons:
+            concepte, import, qui ha pagat i com es reparteix.
+          </p>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step__number" aria-hidden="true">3</div>
+        <div>
+          <h3 class="step__title">Liquida en 1 minut</h3>
+          <p class="step__desc">
+            L'app calcula les transferències mínimes necessàries per deixar-ho tot
+            a zero. Res de deutes creuats ni càlculs manuals.
+          </p>
+        </div>
+      </li>
+    </ol>
+
+    <div style="text-align:center; margin-top:2.5rem;">
+      <a href="https://pilipilisbot.github.io/reparteix/" target="_blank" rel="noopener"
+         class="btn btn-primary btn-lg">
+        Comença ara gratis →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     AVANTATGES DIFERENCIALS
+     ============================================================ -->
+<section class="section" id="avantatges" aria-labelledby="avantatges-title">
+  <div class="container">
+    <div class="section-header section-header--center">
+      <div class="section-label">Per què Reparteix?</div>
+      <h2 class="section-title" id="avantatges-title">Diferent de les alternatives</h2>
+      <p class="section-subtitle">
+        Construïda per a persones que valoren la simplicitat, la privacitat i la independència digital.
+      </p>
+    </div>
+
+    <div class="advantages-grid" role="list">
+
+      <div class="advantage-card" role="listitem">
+        <div class="advantage-card__icon" aria-hidden="true">📶</div>
+        <div>
+          <h3 class="advantage-card__title">Funciona offline</h3>
+          <p class="advantage-card__desc">
+            Sense connexió a internet? Cap problema. Registra despeses en qualsevol lloc,
+            fins i tot a la muntanya o a l'avió.
+          </p>
+        </div>
+      </div>
+
+      <div class="advantage-card" role="listitem">
+        <div class="advantage-card__icon" aria-hidden="true">🔐</div>
+        <div>
+          <h3 class="advantage-card__title">Privacitat per defecte</h3>
+          <p class="advantage-card__desc">
+            Les dades no surten mai del teu dispositiu. Cap empresa les processa,
+            cap servidor les emmagatzema. Zero tracking.
+          </p>
+        </div>
+      </div>
+
+      <div class="advantage-card" role="listitem">
+        <div class="advantage-card__icon" aria-hidden="true">🎫</div>
+        <div>
+          <h3 class="advantage-card__title">Sense compte ni registre</h3>
+          <p class="advantage-card__desc">
+            Obre l'app i comença. No cal email, no cal contrasenya, no cal verificar res.
+            Ús immediat.
+          </p>
+        </div>
+      </div>
+
+      <div class="advantage-card" role="listitem">
+        <div class="advantage-card__icon" aria-hidden="true">⚡</div>
+        <div>
+          <h3 class="advantage-card__title">Ràpid i lleuger</h3>
+          <p class="advantage-card__desc">
+            Carrega en menys d'un segon. Interfície neta sense distraccions.
+            Enregistra una despesa en 10 segons.
+          </p>
+        </div>
+      </div>
+
+      <div class="advantage-card" role="listitem">
+        <div class="advantage-card__icon" aria-hidden="true">💰</div>
+        <div>
+          <h3 class="advantage-card__title">100% gratuït</h3>
+          <p class="advantage-card__desc">
+            Sense plans de pagament, sense funcions premium amagades. Tot disponible per a tothom,
+            per sempre.
+          </p>
+        </div>
+      </div>
+
+      <div class="advantage-card" role="listitem">
+        <div class="advantage-card__icon" aria-hidden="true">🌍</div>
+        <div>
+          <h3 class="advantage-card__title">Codi obert</h3>
+          <p class="advantage-card__desc">
+            Projecte open source. Qualsevol pot revisar el codi, contribuir-hi o
+            allotjar-lo al seu propi servidor.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ
+     ============================================================ -->
+<section class="section section--alt" id="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="section-header section-header--center">
+      <div class="section-label">Preguntes freqüents</div>
+      <h2 class="section-title" id="faq-title">Tens dubtes? Aquí tens les respostes</h2>
+    </div>
+
+    <div class="faq-list" role="list">
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          Necessito crear un compte o registrar-me?
+          <div class="faq-question__icon" aria-hidden="true">+</div>
+        </button>
+        <div class="faq-answer" role="region">
+          No. Reparteix funciona directament des del navegador sense cap mena de registre.
+          Obre l'app i comença a crear grups i afegir despeses immediatament. Sense email,
+          sense contrasenya.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          Funciona sense connexió a internet?
+          <div class="faq-question__icon" aria-hidden="true">+</div>
+        </button>
+        <div class="faq-answer" role="region">
+          Sí, completament. Un cop carregada l'app al navegador, pots usar-la sense
+          connexió. Registra despeses al restaurant, al camping o a l'avió sense cap
+          problema.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          On es guarden les dades?
+          <div class="faq-question__icon" aria-hidden="true">+</div>
+        </button>
+        <div class="faq-answer" role="region">
+          Les dades es guarden al teu propi dispositiu, dins del navegador (localStorage).
+          No hi ha cap servidor extern que les emmagatzemi ni processi. La teva informació
+          és completament privada.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          Puc fer una còpia de seguretat de les dades?
+          <div class="faq-question__icon" aria-hidden="true">+</div>
+        </button>
+        <div class="faq-answer" role="region">
+          Sí. Pots exportar les dades de qualsevol grup en format JSON en qualsevol moment.
+          Guarda el fitxer on vulguis (Drive, iCloud, correu…) i importa-lo fàcilment en
+          un altre dispositiu o navegador.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          Puc instal·lar-la al mòbil com una app?
+          <div class="faq-question__icon" aria-hidden="true">+</div>
+        </button>
+        <div class="faq-answer" role="region">
+          Sí. Reparteix és una PWA (Progressive Web App). Des del navegador del mòbil o
+          l'escriptori pots afegir-la a la pantalla d'inici i obrir-la com qualsevol altra
+          app, sense passar per cap tenda d'aplicacions.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          Com es calculen qui deu a qui?
+          <div class="faq-question__icon" aria-hidden="true">+</div>
+        </button>
+        <div class="faq-answer" role="region">
+          L'app calcula els balanços de cada membre i troba les transferències mínimes
+          necessàries per deixar tots els deutes a zero. Això vol dir menys pagaments i
+          menys complicacions per liquidar-ho tot al final.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA FINAL
+     ============================================================ -->
+<section class="section" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-banner">
+      <h2 class="cta-banner__title" id="cta-title">
+        Comença a repartir ara. Gratis, sempre.
+      </h2>
+      <p class="cta-banner__subtitle">
+        Sense registre, sense núvol, sense complicacions. El proper viatge o sopar, liquida'l en minuts.
+      </p>
+      <div class="cta-banner__buttons">
+        <a href="https://pilipilisbot.github.io/reparteix/" target="_blank" rel="noopener"
+           class="btn btn-white btn-lg">
+          <span aria-hidden="true">🚀</span> Obrir l'app
+        </a>
+        <a href="https://github.com/pilipilisbot/reparteix" target="_blank" rel="noopener"
+           class="btn btn-lg" style="color:white; border:2px solid rgba(255,255,255,.5);">
+          <span aria-hidden="true">⭐</span> Veure el codi
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__inner">
+      <div>
+        <div class="footer__brand-name">
+          <div class="footer__brand-icon" aria-hidden="true">💸</div>
+          Reparteix
+        </div>
+        <p class="footer__brand-desc">
+          App per gestionar despeses compartides en grups petits.<br>
+          Local-first, offline i 100% gratuïta.
+        </p>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Navegació</div>
+        <ul class="footer__links">
+          <li><a href="#funcionalitats">Funcionalitats</a></li>
+          <li><a href="#com-funciona">Com funciona</a></li>
+          <li><a href="#avantatges">Avantatges</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Enllaços</div>
+        <ul class="footer__links">
+          <li>
+            <a href="https://pilipilisbot.github.io/reparteix/" target="_blank" rel="noopener">
+              🚀 Obrir l'app
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/pilipilisbot/reparteix" target="_blank" rel="noopener">
+              ⭐ Codi a GitHub
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/reparteix/landing" target="_blank" rel="noopener">
+              🌐 Landing a GitHub
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© <span id="year"></span> Reparteix. Projecte open source.</span>
+      <div class="footer__license">
+        <span>Llicenciat sota</span>
+        <a href="https://github.com/pilipilisbot/reparteix/blob/main/LICENSE"
+           target="_blank" rel="noopener"
+           style="color:rgba(255,255,255,.85); text-decoration:underline;">
+          MIT License
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+  // Dynamic year in footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Mobile menu toggle
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const isOpen = menu.classList.toggle('open');
+    document.querySelector('.nav__hamburger').setAttribute('aria-expanded', isOpen);
+  }
+
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.querySelector('.nav__hamburger').setAttribute('aria-expanded', 'false');
+  }
+
+  // FAQ accordion
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+  }
+
+  // Smooth scroll for anchor links (fallback for older browsers)
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
