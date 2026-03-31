@@ -645,6 +645,54 @@
     /* =============================================
        CTA BANNER
        ============================================= */
+    /* =============================================
+       CONTACT SECTION
+       ============================================= */
+    .contact-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .contact-card__icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-card__title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: .5rem;
+    }
+
+    .contact-card__text {
+      font-size: .9375rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .contact-email {
+      color: var(--brand);
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .contact-email:hover { color: var(--brand-dark); }
+
+    .contact-cta { text-align: center; margin-top: 2.5rem; }
+
+    /* =============================================
+       CTA BANNER
+       ============================================= */
     .cta-banner {
       background: linear-gradient(135deg, #4F46E5, #7C3AED);
       border-radius: 24px;
@@ -769,6 +817,10 @@
     /* =============================================
        RESPONSIVE
        ============================================= */
+    @media (max-width: 992px) {
+      .contact-cards { grid-template-columns: repeat(2, 1fr); }
+    }
+
     @media (max-width: 768px) {
       .section { padding: 3.5rem 0; }
 
@@ -814,6 +866,7 @@
 
       .footer__inner { grid-template-columns: 1fr; }
       .footer__bottom { flex-direction: column; text-align: center; }
+      .contact-cards { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 480px) {
@@ -843,6 +896,7 @@
         <li><a href="#com-funciona">Com funciona</a></li>
         <li><a href="#avantatges">Avantatges</a></li>
         <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contacte">Contacte</a></li>
       </ul>
 
       <a href="https://app.reparteix.cat/" target="_blank" rel="noopener"
@@ -860,6 +914,7 @@
       <a href="#com-funciona" onclick="closeMenu()">Com funciona</a>
       <a href="#avantatges" onclick="closeMenu()">Avantatges</a>
       <a href="#faq" onclick="closeMenu()">FAQ</a>
+      <a href="#contacte" onclick="closeMenu()">Contacte</a>
       <a href="https://app.reparteix.cat/" target="_blank" rel="noopener"
          class="btn btn-primary" onclick="closeMenu()">Prova-la gratis →</a>
     </div>
@@ -1334,9 +1389,59 @@
 </section>
 
 <!-- ============================================================
+     CONTACTE
+     ============================================================ -->
+<section class="section" id="contacte" aria-labelledby="contacte-title">
+  <div class="container">
+    <div class="section-header section-header--center">
+      <div class="section-label">Contacte</div>
+      <h2 class="section-title" id="contacte-title">T'agrada el projecte? Escriu-nos!</h2>
+      <p class="section-subtitle">
+        Reparteix és un projecte completament gratuït i sense ànim de lucre. No hi ha cap benefici
+        econòmic al darrere: l'hem creat perquè creiem que repartir despeses hauria de ser simple i accessible per a tothom.
+      </p>
+    </div>
+
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="contact-card__icon" aria-hidden="true">💡</div>
+        <h3 class="contact-card__title">Proposta de funcionalitat</h3>
+        <p class="contact-card__text">
+          Tens alguna idea per millorar l'app o necessites una funcionalitat específica? Explica'ns-ho!
+          Valorem totes les opinions de la comunitat.
+        </p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card__icon" aria-hidden="true">🤝</div>
+        <h3 class="contact-card__title">Col·laboració o feedback</h3>
+        <p class="contact-card__text">
+          Vols contribuir al projecte, reportar un error o simplement dir-nos que t'ha estat útil?
+          Qualsevol missatge és benvingut.
+        </p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card__icon" aria-hidden="true">📬</div>
+        <h3 class="contact-card__title">Contacta amb nosaltres</h3>
+        <p class="contact-card__text">
+          Escriu-nos a
+          <a href="mailto:hola@reparteix.cat" class="contact-email">hola@reparteix.cat</a>
+          i t'respondrem tan aviat com puguem.
+        </p>
+      </div>
+    </div>
+
+    <div class="contact-cta">
+      <a href="mailto:hola@reparteix.cat" class="btn btn-primary btn-lg">
+        <span aria-hidden="true">✉️</span> hola@reparteix.cat
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
      CTA FINAL
      ============================================================ -->
-<section class="section" aria-labelledby="cta-title">
+<section class="section section--alt" aria-labelledby="cta-title">
   <div class="container">
     <div class="cta-banner">
       <h2 class="cta-banner__title" id="cta-title">
@@ -1383,6 +1488,7 @@
           <li><a href="#com-funciona">Com funciona</a></li>
           <li><a href="#avantatges">Avantatges</a></li>
           <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contacte">Contacte</a></li>
         </ul>
       </div>
 
@@ -1402,6 +1508,11 @@
           <li>
             <a href="https://github.com/reparteix/landing" target="_blank" rel="noopener">
               🌐 Landing a GitHub
+            </a>
+          </li>
+          <li>
+            <a href="mailto:hola@reparteix.cat">
+              ✉️ hola@reparteix.cat
             </a>
           </li>
         </ul>
