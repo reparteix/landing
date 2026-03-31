@@ -22,6 +22,9 @@
   <meta name="twitter:description" content="Alternativa simple a Splitwise. Offline, privat i instal·lable al mòbil. Sense registre." />
   <meta name="twitter:image" content="https://reparteix.cat/og-image.png" />
 
+  <!-- Analytics (sense cookies) – substitueix data-website-id pel teu ID d'Umami -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="EL-TEU-WEBSITE-ID-AQUI"></script>
+
   <style>
     /* =============================================
        RESET & BASE
@@ -766,6 +769,13 @@
       gap: .375rem;
     }
 
+    .footer__analytics-notice {
+      margin-top: 1rem;
+      font-size: .75rem;
+      color: rgba(255,255,255,.5);
+      text-align: center;
+    }
+
     /* =============================================
        RESPONSIVE
        ============================================= */
@@ -1419,6 +1429,11 @@
         </a>
       </div>
     </div>
+
+    <p class="footer__analytics-notice">
+      📊 Aquesta web utilitza <a href="https://umami.is" target="_blank" rel="noopener" style="color:rgba(255,255,255,.85);text-decoration:underline;">Umami Analytics</a>
+      per mesurar visites de forma anònima. No s'utilitzen cookies ni es recull cap dada personal.
+    </p>
   </div>
 </footer>
 
