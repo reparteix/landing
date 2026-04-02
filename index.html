@@ -156,9 +156,9 @@
     }
 
     .nav__inner {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      justify-content: space-between;
       height: 64px;
     }
 
@@ -198,7 +198,9 @@
     }
     .nav__links a:hover { color: var(--brand); }
 
-    .nav__cta { margin-left: .5rem; }
+    .nav__cta { margin-left: auto; }
+
+    .nav__mobile-menu { display: none; }
 
     /* Mobile nav toggle */
     .nav__hamburger {
@@ -209,6 +211,7 @@
       padding: .5rem;
       background: none;
       border: none;
+      margin-left: auto;
     }
     .nav__hamburger span {
       display: block;
@@ -833,6 +836,12 @@
 
     @media (max-width: 768px) {
       .section { padding: 3.5rem 0; }
+
+      .nav__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
 
       .nav__links,
       .nav__cta { display: none; }
