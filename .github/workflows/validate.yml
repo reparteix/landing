@@ -1,0 +1,69 @@
+name: Validate website
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    name: HTML validation & asset checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install html-validate
+        run: npm install -g html-validate@10.11.2
+
+      - name: Validate HTML
+        run: html-validate index.html
+
+      - name: Check referenced local assets exist
+        run: |
+          echo "Checking that local assets referenced in index.html exist..."
+
+          # Extract src/href attributes pointing to local files (no http/https, no data:, no #, no mailto:)
+          grep -oP '(?:href|src)="(?!https?://|//|data:|#|mailto:)[^"]*"' index.html \
+            | grep -oP '(?<=")[^"]+(?=")' \
+            | sed 's/^\/*//' \
+            | sort -u > /tmp/local_assets.txt
+
+          missing=0
+          while IFS= read -r asset; do
+            if [ -n "$asset" ] && [ ! -f "$asset" ] && [ ! -d "$asset" ]; then
+              echo "MISSING: $asset"
+              missing=1
+            fi
+          done < /tmp/local_assets.txt
+
+          if [ "$missing" -eq 1 ]; then
+            echo "ERROR: Some referenced local assets are missing."
+            exit 1
+          fi
+          echo "All local assets found."
+
+      - name: Check og:image exists locally
+        run: |
+          og_image=$(grep -oP '(?<=og:image" content=")[^"]+' index.html | head -1)
+          if [ -n "$og_image" ]; then
+            # Extract path from absolute URL if pointing to reparteix.cat
+            path=$(echo "$og_image" | sed 's|https://reparteix\.cat||')
+            if [ -n "$path" ] && [ "$path" != "$og_image" ]; then
+              file="${path#/}"
+              if [ ! -f "$file" ]; then
+                echo "ERROR: og:image references '$file' but file does not exist."
+                exit 1
+              fi
+              echo "OK: og:image file '$file' exists."
+            fi
+          fi
