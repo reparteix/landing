@@ -644,8 +644,16 @@
     }
 
     .faq-item.open .faq-answer {
-      max-height: 200px;
+      max-height: 600px;
       padding: 0 1.5rem 1.25rem;
+    }
+
+    .faq-answer ol {
+      margin: .5rem 0 0 1.25rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .25rem;
     }
 
     /* =============================================
@@ -1400,6 +1408,28 @@
           L'app calcula els balanços de cada membre i troba les transferències mínimes
           necessàries per deixar tots els deutes a zero. Això vol dir menys pagaments i
           menys complicacions per liquidar-ho tot al final.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          Puc usar-lo amb altres persones des de dispositius diferents?
+          <div class="faq-question__icon" aria-hidden="true">+</div>
+        </button>
+        <div class="faq-answer" role="region">
+          Sí, de manera manual mitjançant l'exportació i importació de JSON. El flux és el
+          següent:
+          <ol>
+            <li>Una persona crea el grup i afegeix tots els membres.</li>
+            <li>Exporta el grup en format JSON i comparteix el fitxer (per correu, missatgeria, etc.).</li>
+            <li>Les altres persones importen el JSON al seu dispositiu i ja tenen el grup complet.</li>
+            <li>Cadascú pot anar afegint despeses localment.</li>
+            <li>Quan calgui sincronitzar, exporta el JSON actualitzat i comparteix-lo perquè la resta l'importi i tingui els darrers canvis.</li>
+          </ol>
+          Per garantir que la sincronització funcioni correctament, el grup i cada persona
+          han de mantenir sempre el mateix identificador intern. Aquests identificadors
+          s'assignen en crear-los i es preserven en exportar i importar el fitxer, de
+          manera que no cal fer-ne cap gestió manual.
         </div>
       </div>
 
