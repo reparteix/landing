@@ -12,15 +12,113 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://reparteix.cat/" />
+  <meta property="og:site_name" content="Reparteix" />
+  <meta property="og:locale" content="ca_ES" />
   <meta property="og:title" content="Reparteix – Reparteix despeses fàcilment, sense comptes ni núvol" />
   <meta property="og:description" content="Alternativa simple a Splitwise. Offline, privat i instal·lable al mòbil. Sense registre." />
   <meta property="og:image" content="https://reparteix.cat/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Reparteix – App per gestionar despeses compartides" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Reparteix – Reparteix despeses sense complicar-te" />
   <meta name="twitter:description" content="Alternativa simple a Splitwise. Offline, privat i instal·lable al mòbil. Sense registre." />
   <meta name="twitter:image" content="https://reparteix.cat/og-image.png" />
+  <meta name="twitter:image:alt" content="Reparteix – App per gestionar despeses compartides" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Reparteix",
+    "url": "https://app.reparteix.cat/",
+    "description": "Reparteix és l'alternativa simple a Splitwise. Gestiona despeses compartides amb amics, parella o pis compartit. Funciona offline, sense registre i les dades queden al teu dispositiu.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "featureList": [
+      "Funciona offline",
+      "Sense registre",
+      "Dades locals al dispositiu",
+      "Instal·lable com a PWA",
+      "Exportació i importació JSON",
+      "Càlcul automàtic de deutes mínims"
+    ],
+    "inLanguage": "ca",
+    "isAccessibleForFree": true
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Necessito crear un compte o registrar-me?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Reparteix funciona directament des del navegador sense cap mena de registre. Obre l'app i comença a crear grups i afegir despeses immediatament. Sense email, sense contrasenya."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Funciona sense connexió a internet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí, completament. Un cop carregada l'app al navegador, pots usar-la sense connexió. Registra despeses al restaurant, al camping o a l'avió sense cap problema."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "On es guarden les dades?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Les dades es guarden al teu propi dispositiu, dins del navegador (localStorage). No hi ha cap servidor extern que les emmagatzemi ni processi. La teva informació és completament privada."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Puc fer una còpia de seguretat de les dades?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Pots exportar les dades de qualsevol grup en format JSON en qualsevol moment. Guarda el fitxer on vulguis (Drive, iCloud, correu…) i importa-lo fàcilment en un altre dispositiu o navegador."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Puc instal·lar-la al mòbil com una app?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Reparteix és una PWA (Progressive Web App). Des del navegador del mòbil o l'escriptori pots afegir-la a la pantalla d'inici i obrir-la com qualsevol altra app, sense passar per cap botiga d'aplicacions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Com es calcula qui deu a qui?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "L'app calcula els balanços de cada membre i troba les transferències mínimes necessàries per deixar tots els deutes a zero. Això vol dir menys pagaments i menys complicacions per liquidar-ho tot al final."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Puc usar-lo amb altres persones des de dispositius diferents?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí, de manera manual mitjançant l'exportació i importació de JSON. Una persona crea el grup, exporta el JSON i el comparteix. Les altres persones l'importen al seu dispositiu. Quan calgui sincronitzar, s'exporta el JSON actualitzat i es comparteix perquè la resta l'importi."
+        }
+      }
+    ]
+  }
+  </script>
 
   <!-- Analytics (sense cookies) -->
   <script async src="https://analytics.umami.is/script.js" data-website-id="7a1f6d28-7591-4751-a259-163caea1bfe4"></script>
