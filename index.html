@@ -49,6 +49,7 @@
       "Sense registre",
       "Dades locals al dispositiu",
       "Instal·lable com a PWA",
+      "Compartir grups per enllaç",
       "Exportació i importació JSON",
       "Càlcul automàtic de deutes mínims"
     ],
@@ -114,7 +115,7 @@
         "name": "Puc usar-lo amb altres persones des de dispositius diferents?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Sí, de manera manual mitjançant l'exportació i importació de JSON. Una persona crea el grup, exporta el JSON i el comparteix. Les altres persones l'importen al seu dispositiu. Quan calgui sincronitzar, s'exporta el JSON actualitzat i es comparteix perquè la resta l'importi."
+          "text": "Sí. Pots compartir un grup fàcilment amb un enllaç. L'altra persona veurà una previsualització i el podrà importar o fusionar al seu dispositiu. Si ho prefereixes, també pots continuar fent servir l'exportació i importació de JSON."
         }
       }
     ]
@@ -1064,7 +1065,7 @@
 
         <p class="hero__subtitle">
           Gestiona qui deu a qui en grups d'amics, pisos compartits o viatges.
-          Sense registre, sense núvol: tot queda al teu dispositiu.
+          Sense registre, sense núvol, i ara també amb compartir per enllaç entre dispositius.
         </p>
 
         <div class="hero__ctas">
@@ -1187,6 +1188,7 @@
           <li data-icon="✅">Tot clar i centralitzat: balanços en temps real</li>
           <li data-icon="✅">Obre l'app i comença a usar-la, sense registre</li>
           <li data-icon="✅">Les dades queden al teu dispositiu, sota el teu control</li>
+          <li data-icon="✅">Compartir grups per enllaç, sense servidor</li>
           <li data-icon="✅">Càlcul automàtic de transferències mínimes</li>
           <li data-icon="✅">Funciona sense connexió a internet</li>
         </ul>
@@ -1254,11 +1256,20 @@
       </article>
 
       <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">🔗</div>
+        <h3 class="feature-card__title">Compartir per enllaç</h3>
+        <p class="feature-card__desc">
+          Genera un enllaç del grup i comparteix-lo amb una altra persona. Podrà
+          previsualitzar-lo i importar-lo o fusionar-lo al seu dispositiu, sense servidor.
+        </p>
+      </article>
+
+      <article class="feature-card" role="listitem">
         <div class="feature-card__icon" aria-hidden="true">💾</div>
         <h3 class="feature-card__title">Exportar i importar dades</h3>
         <p class="feature-card__desc">
-          Fes una còpia de seguretat en format JSON i importa-la en qualsevol
-          dispositiu. Migrar o fer backup és qüestió de segons.
+          Si ho prefereixes, també pots fer una còpia de seguretat en format JSON
+          i importar-la en qualsevol dispositiu. Migrar o fer backup és qüestió de segons.
         </p>
       </article>
 
@@ -1315,7 +1326,7 @@
           <h3 class="step__title">Afegeix les despeses</h3>
           <p class="step__desc">
             Cada vegada que algú pagui alguna cosa, registra-ho en 10 segons:
-            concepte, import, qui ha pagat i com es reparteix.
+            concepte, import, qui ha pagat i com es reparteix. Després ho pots compartir amb un enllaç.
           </p>
         </div>
       </li>
@@ -1412,6 +1423,17 @@
       </div>
 
       <div class="advantage-card" role="listitem">
+        <div class="advantage-card__icon" aria-hidden="true">🔗</div>
+        <div>
+          <h3 class="advantage-card__title">Compartir sense servidor</h3>
+          <p class="advantage-card__desc">
+            Comparteix grups amb un enllaç que conté les dades comprimides al mateix URL.
+            L'altra persona les pot importar o fusionar sense crear cap compte.
+          </p>
+        </div>
+      </div>
+
+      <div class="advantage-card" role="listitem">
         <div class="advantage-card__icon" aria-hidden="true">🌍</div>
         <div>
           <h3 class="advantage-card__title">Codi obert</h3>
@@ -1481,7 +1503,7 @@
         </button>
         <div class="faq-answer" id="faq-answer-4" role="region" aria-labelledby="faq-btn-4">
           Sí. Pots exportar les dades de qualsevol grup en format JSON en qualsevol moment.
-          Guarda el fitxer on vulguis (Drive, iCloud, correu…) i importa-lo fàcilment en
+          Guarda el fitxer on vulguis (Drive, iCloud, correu…) i importa'l fàcilment en
           un altre dispositiu o navegador.
         </div>
       </div>
@@ -1516,19 +1538,16 @@
           <span class="faq-question__icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-answer" id="faq-answer-7" role="region" aria-labelledby="faq-btn-7">
-          Sí, de manera manual mitjançant l'exportació i importació de JSON. El flux és el
-          següent:
+          Sí. Ara la manera més fàcil és compartir el grup amb un enllaç.
+          La persona que el rep veu una previsualització i pot:
           <ol>
-            <li>Una persona crea el grup i afegeix tots els membres.</li>
-            <li>Exporta el grup en format JSON i comparteix el fitxer (per correu, missatgeria, etc.).</li>
-            <li>Les altres persones importen el JSON al seu dispositiu i ja tenen el grup complet.</li>
-            <li>Cadascú pot anar afegint despeses localment.</li>
-            <li>Quan calgui sincronitzar, exporta el JSON actualitzat i comparteix-lo perquè la resta l'importi i tingui els darrers canvis.</li>
+            <li>Importar-lo com a grup nou si encara no el té.</li>
+            <li>Fusionar-lo amb el grup existent si ja el tenia al dispositiu.</li>
+            <li>Importar-lo com a còpia nova si vol treballar-ne amb una versió independent.</li>
           </ol>
-          Per garantir que la sincronització funcioni correctament, el grup i cada persona
-          han de mantenir sempre el mateix identificador intern. Aquests identificadors
-          s'assignen en crear-los i es preserven en exportar i importar el fitxer, de
-          manera que no cal fer-ne cap gestió manual.
+          Tot això es fa sense servidor i sense crear cap compte. Si ho prefereixes,
+          també pots continuar fent servir l'exportació i importació de JSON com a còpia
+          de seguretat o mètode alternatiu.
         </div>
       </div>
 
@@ -1596,7 +1615,7 @@
         Comença a repartir ara. Gratis, sempre.
       </h2>
       <p class="cta-banner__subtitle">
-        Sense registre, sense núvol, sense complicacions. El proper viatge o sopar, liquida'l en minuts.
+        Sense registre, sense núvol, sense complicacions. Comparteix grups per enllaç i liquida el proper viatge o sopar en minuts.
       </p>
       <div class="cta-banner__buttons">
         <a href="https://app.reparteix.cat/" target="_blank" rel="noopener"
