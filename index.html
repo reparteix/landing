@@ -132,25 +132,25 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --brand:       #4F46E5;
-      --brand-dark:  #3730A3;
-      --brand-light: #EEF2FF;
-      --accent:      #06B6D4;
-      --text:        #1E293B;
-      --muted:       #64748B;
-      --surface:     #F8FAFC;
+      --brand:       #3F3AA8;
+      --brand-dark:  #312C86;
+      --brand-light: #ECEBFF;
+      --accent:      #168A9A;
+      --text:        #172033;
+      --muted:       #5F6B7A;
+      --surface:     #F6F7FB;
       --white:       #FFFFFF;
-      --border:      #E2E8F0;
+      --border:      #E3E8F1;
       --radius:      12px;
-      --shadow-sm:   0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
-      --shadow-md:   0 4px 6px -1px rgba(0,0,0,.10), 0 2px 4px -1px rgba(0,0,0,.06);
-      --shadow-lg:   0 10px 15px -3px rgba(0,0,0,.10), 0 4px 6px -2px rgba(0,0,0,.05);
+      --shadow-sm:   0 1px 2px rgba(17,24,39,.06), 0 1px 1px rgba(17,24,39,.04);
+      --shadow-md:   0 10px 24px rgba(17,24,39,.08), 0 2px 8px rgba(17,24,39,.05);
+      --shadow-lg:   0 18px 40px rgba(17,24,39,.12), 0 6px 18px rgba(17,24,39,.06);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       color: var(--text);
       background: var(--white);
       line-height: 1.6;
@@ -326,17 +326,18 @@
        HERO
        ============================================= */
     .hero {
-      background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #06B6D4 100%);
+      background: linear-gradient(180deg, #F3F1FF 0%, #FFFFFF 72%);
       padding: 6rem 0 5rem;
       overflow: hidden;
       position: relative;
+      border-bottom: 1px solid var(--border);
     }
 
     .hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background: radial-gradient(circle at top right, rgba(63,58,168,.10), transparent 28%), radial-gradient(circle at bottom left, rgba(22,138,154,.08), transparent 26%);
     }
 
     .hero__inner {
@@ -351,14 +352,14 @@
       display: inline-flex;
       align-items: center;
       gap: .5rem;
-      background: rgba(255,255,255,.15);
+      background: var(--brand-light);
       backdrop-filter: blur(8px);
-      color: white;
+      color: var(--brand);
       font-size: .8125rem;
       font-weight: 600;
       padding: .375rem .875rem;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.25);
+      border: 1px solid rgba(63,58,168,.12);
       margin-bottom: 1.5rem;
     }
 
@@ -366,18 +367,18 @@
       font-size: clamp(2rem, 5vw, 3.25rem);
       font-weight: 900;
       line-height: 1.1;
-      color: white;
+      color: var(--text);
       margin-bottom: 1.25rem;
     }
 
     .hero__title em {
       font-style: normal;
-      color: #A5F3FC;
+      color: var(--brand);
     }
 
     .hero__subtitle {
       font-size: clamp(1rem, 2vw, 1.2rem);
-      color: rgba(255,255,255,.85);
+      color: var(--muted);
       margin-bottom: 2rem;
       max-width: 500px;
     }
@@ -400,7 +401,7 @@
       display: flex;
       align-items: center;
       gap: .375rem;
-      color: rgba(255,255,255,.8);
+      color: var(--muted);
       font-size: .875rem;
       font-weight: 500;
     }
@@ -1060,22 +1061,21 @@
         </div>
 
         <h1 class="hero__title">
-          Reparteix despeses <em>sense complicar-te</em>
+          Reparteix despeses compartides <em>sense comptes ni embolics</em>
         </h1>
 
         <p class="hero__subtitle">
-          Gestiona qui deu a qui en grups d'amics, pisos compartits o viatges.
-          Sense registre, sense núvol, i ara també amb compartir per enllaç entre dispositius.
+          Per a viatges, pisos i grups. Funciona al navegador, guarda les dades al teu dispositiu
+          i et diu clarament qui deu a qui.
         </p>
 
         <div class="hero__ctas">
           <a href="https://app.reparteix.cat/" target="_blank" rel="noopener"
-             class="btn btn-white btn-lg">
-            <span aria-hidden="true">🚀</span> Prova-la ara
+             class="btn btn-primary btn-lg">
+            <span aria-hidden="true">🚀</span> Obrir l'app
           </a>
-          <a href="#funcionalitats" class="btn btn-lg"
-             style="color:white; border:2px solid rgba(255,255,255,.5);">
-            Veure funcionalitats
+          <a href="#com-funciona" class="btn btn-secondary btn-lg">
+            Veure com funciona
           </a>
         </div>
 
@@ -1084,7 +1084,7 @@
             <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
             </svg>
-            100% gratuït
+            Gratuïta
           </div>
           <div class="hero__trust-item" role="listitem">
             <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -1102,7 +1102,7 @@
             <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
             </svg>
-            Instal·lable al mòbil
+            Local-first
           </div>
         </div>
       </div>
@@ -1175,7 +1175,7 @@
         <ul class="problem-card__list">
           <li data-icon="❌">Missatges de WhatsApp interminables per veure qui deu a qui</li>
           <li data-icon="❌">Apps que et obliguen a registrar-te i crear un compte</li>
-          <li data-icon="❌">Les dades viatgen a servidors externs sense control</li>
+          <li data-icon="❌">Les dades acaben en serveis externs que no controles</li>
           <li data-icon="❌">Càlculs a mà que sovint surten malament</li>
           <li data-icon="❌">Sense internet, no hi ha accés</li>
         </ul>
@@ -1188,7 +1188,7 @@
           <li data-icon="✅">Tot clar i centralitzat: balanços en temps real</li>
           <li data-icon="✅">Obre l'app i comença a usar-la, sense registre</li>
           <li data-icon="✅">Les dades queden al teu dispositiu, sota el teu control</li>
-          <li data-icon="✅">Compartir grups per enllaç, sense servidor</li>
+          <li data-icon="✅">Dades locals al teu dispositiu, amb còpies i importació fàcils</li>
           <li data-icon="✅">Càlcul automàtic de transferències mínimes</li>
           <li data-icon="✅">Funciona sense connexió a internet</li>
         </ul>
@@ -1241,8 +1241,8 @@
         <div class="feature-card__icon" aria-hidden="true">⚖️</div>
         <h3 class="feature-card__title">Càlcul automàtic de balanços</h3>
         <p class="feature-card__desc">
-          L'app calcula automàticament qui deu a qui i minimitza el nombre de
-          transferències necessàries per liquidar-ho tot.
+          L'app calcula automàticament qui deu a qui i redueix les transferències
+          necessàries per liquidar-ho tot sense embolics.
         </p>
       </article>
 
@@ -1259,8 +1259,8 @@
         <div class="feature-card__icon" aria-hidden="true">🔗</div>
         <h3 class="feature-card__title">Compartir per enllaç</h3>
         <p class="feature-card__desc">
-          Genera un enllaç del grup i comparteix-lo amb una altra persona. Podrà
-          previsualitzar-lo i importar-lo o fusionar-lo al seu dispositiu, sense servidor.
+          Si necessites moure un grup entre dispositius, pots compartir-lo amb un enllaç
+          o exportar-lo i importar-lo fàcilment quan et convingui.
         </p>
       </article>
 
@@ -1286,8 +1286,8 @@
         <div class="feature-card__icon" aria-hidden="true">🔒</div>
         <h3 class="feature-card__title">Privacitat local-first</h3>
         <p class="feature-card__desc">
-          Les dades es guarden al teu navegador. Cap servidor extern, cap
-          compte necessari. La teva informació és només teva.
+          Les dades es guarden al teu navegador. No cal crear cap compte i tens
+          control directe sobre còpies, exportacions i importacions.
         </p>
       </article>
 
@@ -1326,7 +1326,8 @@
           <h3 class="step__title">Afegeix les despeses</h3>
           <p class="step__desc">
             Cada vegada que algú pagui alguna cosa, registra-ho en 10 segons:
-            concepte, import, qui ha pagat i com es reparteix. Després ho pots compartir amb un enllaç.
+            concepte, import, qui ha pagat i com es reparteix. Tot queda a punt per consultar
+            saldos i continuar més tard sense dependre d'un compte.
           </p>
         </div>
       </li>
@@ -1383,8 +1384,8 @@
         <div>
           <h3 class="advantage-card__title">Privacitat per defecte</h3>
           <p class="advantage-card__desc">
-            Les dades no surten mai del teu dispositiu. Cap empresa les processa,
-            cap servidor les emmagatzema. Zero tracking.
+            Les dades es guarden al teu dispositiu i no necessites cap compte per fer-lo servir.
+            Prioritza control, simplicitat i dependència mínima de tercers.
           </p>
         </div>
       </div>
@@ -1425,10 +1426,10 @@
       <div class="advantage-card" role="listitem">
         <div class="advantage-card__icon" aria-hidden="true">🔗</div>
         <div>
-          <h3 class="advantage-card__title">Compartir sense servidor</h3>
+          <h3 class="advantage-card__title">Portabilitat senzilla</h3>
           <p class="advantage-card__desc">
-            Comparteix grups amb un enllaç que conté les dades comprimides al mateix URL.
-            L'altra persona les pot importar o fusionar sense crear cap compte.
+            Pots moure grups entre dispositius amb importació, exportació o compartir per enllaç,
+            sense convertir això en un sistema pesat o obligar-te a registrar-te.
           </p>
         </div>
       </div>
@@ -1490,9 +1491,8 @@
           <span class="faq-question__icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-answer" id="faq-answer-3" role="region" aria-labelledby="faq-btn-3">
-          Les dades es guarden al teu propi dispositiu, dins del navegador (localStorage).
-          No hi ha cap servidor extern que les emmagatzemi ni processi. La teva informació
-          és completament privada.
+          Les dades es guarden al teu propi dispositiu, dins del navegador. No cal crear cap
+          compte per fer-lo servir i tu controles les còpies de seguretat i la portabilitat.
         </div>
       </div>
 
@@ -1538,16 +1538,15 @@
           <span class="faq-question__icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-answer" id="faq-answer-7" role="region" aria-labelledby="faq-btn-7">
-          Sí. Ara la manera més fàcil és compartir el grup amb un enllaç.
+          Sí. Pots compartir el grup amb un enllaç o fer servir exportació i importació.
           La persona que el rep veu una previsualització i pot:
           <ol>
             <li>Importar-lo com a grup nou si encara no el té.</li>
             <li>Fusionar-lo amb el grup existent si ja el tenia al dispositiu.</li>
             <li>Importar-lo com a còpia nova si vol treballar-ne amb una versió independent.</li>
           </ol>
-          Tot això es fa sense servidor i sense crear cap compte. Si ho prefereixes,
-          també pots continuar fent servir l'exportació i importació de JSON com a còpia
-          de seguretat o mètode alternatiu.
+          No cal crear cap compte. Si ho prefereixes, també pots continuar fent servir
+          l'exportació i importació de JSON com a còpia de seguretat o mètode alternatiu.
         </div>
       </div>
 
@@ -1612,10 +1611,10 @@
   <div class="container">
     <div class="cta-banner">
       <h2 class="cta-banner__title" id="cta-title">
-        Comença a repartir ara. Gratis, sempre.
+        Comença a repartir despeses amb calma i control.
       </h2>
       <p class="cta-banner__subtitle">
-        Sense registre, sense núvol, sense complicacions. Comparteix grups per enllaç i liquida el proper viatge o sopar en minuts.
+        Sense compte, sense embolics i amb les dades al teu dispositiu. Ideal per al proper viatge, pis o sopar compartit.
       </p>
       <div class="cta-banner__buttons">
         <a href="https://app.reparteix.cat/" target="_blank" rel="noopener"
