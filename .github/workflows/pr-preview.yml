@@ -1,0 +1,248 @@
+name: PR Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+  deployments: write
+
+concurrency:
+  group: pr-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-preview:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR code
+        uses: actions/checkout@v6
+
+      - name: Create deployment
+        id: deployment
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const { data: deployment } = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.payload.pull_request.head.sha,
+              environment: `landing-${context.payload.pull_request.number}`,
+              auto_merge: false,
+              required_contexts: [],
+              transient_environment: true,
+              production_environment: false,
+              description: `Preview for PR #${context.payload.pull_request.number}`,
+            });
+            core.setOutput('id', deployment.id);
+
+      - name: Set deployment status to in_progress
+        uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ steps.deployment.outputs.id }},
+              state: 'in_progress',
+              log_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
+
+      - name: Deploy preview to staging repo
+        env:
+          STAGING_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euxo pipefail
+
+          if [ -z "${STAGING_TOKEN}" ]; then
+            echo "::warning::STAGING_TOKEN is not set. Skipping preview deployment. Add the secret in repository settings."
+            exit 0
+          fi
+
+          PREVIEW_DIR="landing-${PR_NUMBER}"
+          STAGING_DIR="/tmp/staging-${PR_NUMBER}"
+
+          rm -rf "${STAGING_DIR}"
+          git clone --depth 1 "https://x-access-token:${STAGING_TOKEN}@github.com/reparteix/staging.git" "${STAGING_DIR}"
+
+          rm -rf "${STAGING_DIR}/${PREVIEW_DIR}"
+          mkdir -p "${STAGING_DIR}/${PREVIEW_DIR}"
+
+          rsync -a \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            --exclude '.gitignore' \
+            --exclude 'README.md' \
+            ./ "${STAGING_DIR}/${PREVIEW_DIR}/"
+
+          touch "${STAGING_DIR}/.nojekyll"
+
+          cd "${STAGING_DIR}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "deploy: update landing preview for PR #${PR_NUMBER}"
+            git push origin main
+          fi
+
+      - name: Set deployment status to success
+        if: success()
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const previewUrl = `https://staging.reparteix.cat/landing-${prNumber}/`;
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ steps.deployment.outputs.id }},
+              state: 'success',
+              environment_url: previewUrl,
+              log_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
+
+      - name: Set deployment status to failure
+        if: failure()
+        uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ steps.deployment.outputs.id }},
+              state: 'failure',
+              log_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
+
+      - name: Comment on PR with preview URL
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const previewUrl = `https://staging.reparteix.cat/landing-${prNumber}/`;
+            const marker = '<!-- pr-preview-comment -->';
+            const fullBody = `${marker}\n🚀 **Preview deployed!**\n\n${previewUrl}`;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+
+            const existing = comments.find(c => c.body?.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body: fullBody,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: fullBody,
+              });
+            }
+
+  cleanup-preview:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove preview from staging repo
+        env:
+          STAGING_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euxo pipefail
+
+          if [ -z "${STAGING_TOKEN}" ]; then
+            echo "::warning::STAGING_TOKEN is not set. Skipping preview cleanup. Add the secret in repository settings."
+            exit 0
+          fi
+
+          PREVIEW_DIR="landing-${PR_NUMBER}"
+          STAGING_DIR="/tmp/staging-${PR_NUMBER}"
+          rm -rf "${STAGING_DIR}"
+          git clone --depth 1 "https://x-access-token:${STAGING_TOKEN}@github.com/reparteix/staging.git" "${STAGING_DIR}"
+
+          if [ -d "${STAGING_DIR}/${PREVIEW_DIR}" ]; then
+            rm -rf "${STAGING_DIR}/${PREVIEW_DIR}"
+            cd "${STAGING_DIR}"
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add -A
+            if git diff --cached --quiet; then
+              echo "No changes to commit"
+            else
+              git commit -m "cleanup: remove landing preview for PR #${PR_NUMBER}"
+              git push origin main
+            fi
+          else
+            echo "Preview directory ${PREVIEW_DIR} does not exist, nothing to clean up"
+          fi
+
+      - name: Deactivate deployment
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const environment = `landing-${prNumber}`;
+
+            const { data: deployments } = await github.rest.repos.listDeployments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              environment,
+              per_page: 100,
+            });
+
+            for (const deployment of deployments) {
+              await github.rest.repos.createDeploymentStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                deployment_id: deployment.id,
+                state: 'inactive',
+              });
+            }
+
+      - name: Update PR comment
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const wasMerged = context.payload.pull_request.merged;
+            const marker = '<!-- pr-preview-comment -->';
+            const body = `${marker}\n🗑️ **Preview removed.** (PR ${wasMerged ? 'merged' : 'closed without merge'})`;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+
+            const existing = comments.find(c => c.body?.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body,
+              });
+            }
