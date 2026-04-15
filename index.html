@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- SEO -->
-  <title>Reparteix – Reparteix despeses amb sync privat, sense comptes ni núvol</title>
-  <meta name="description" content="Reparteix és l'alternativa local-first a Splitwise. Gestiona despeses compartides, funciona offline i ara sincronitza entre dispositius amb xifrat punt a punt, sense registre." />
+  <title>Reparteix – Reparteix despeses amb sync privat, recordatoris i sense comptes</title>
+  <meta name="description" content="Reparteix és l'alternativa local-first a Splitwise. Gestiona despeses compartides, funciona offline, permet compartir recordatoris de pagament i sincronitza entre dispositius amb xifrat punt a punt, sense registre." />
   <link rel="canonical" href="https://reparteix.cat/" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
@@ -15,8 +15,8 @@
   <meta property="og:url" content="https://reparteix.cat/" />
   <meta property="og:site_name" content="Reparteix" />
   <meta property="og:locale" content="ca_ES" />
-  <meta property="og:title" content="Reparteix – Despeses compartides amb sync privat i sense comptes" />
-  <meta property="og:description" content="Alternativa local-first a Splitwise. Offline, privada, instal·lable i amb sincronització P2P xifrada entre dispositius." />
+  <meta property="og:title" content="Reparteix – Despeses compartides amb sync privat, recordatoris i sense comptes" />
+  <meta property="og:description" content="Alternativa local-first a Splitwise. Offline, privada, instal·lable, amb recordatoris compartibles i sincronització P2P xifrada." />
   <meta property="og:image" content="https://reparteix.cat/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -24,8 +24,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Reparteix – Despeses compartides amb sync privat" />
-  <meta name="twitter:description" content="Alternativa local-first a Splitwise. Offline, privada, instal·lable i amb sincronització P2P xifrada." />
+  <meta name="twitter:title" content="Reparteix – Despeses compartides amb sync privat i recordatoris" />
+  <meta name="twitter:description" content="Alternativa local-first a Splitwise. Offline, privada, instal·lable, amb recordatoris compartibles i sincronització P2P xifrada." />
   <meta name="twitter:image" content="https://reparteix.cat/og-image.png" />
   <meta name="twitter:image:alt" content="Reparteix – App per gestionar despeses compartides" />
 
@@ -36,7 +36,7 @@
     "@type": "WebApplication",
     "name": "Reparteix",
     "url": "https://app.reparteix.cat/",
-    "description": "Reparteix és l'alternativa local-first a Splitwise. Gestiona despeses compartides, funciona offline, no requereix registre i permet sincronització punt a punt xifrada entre dispositius.",
+    "description": "Reparteix és l'alternativa local-first a Splitwise. Gestiona despeses compartides, funciona offline, no requereix registre, permet compartir recordatoris de pagament i sincronització punt a punt xifrada entre dispositius.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
     "offers": {
@@ -51,6 +51,7 @@
       "Instal·lable com a PWA",
       "Compartir grups per enllaç",
       "Sincronització P2P xifrada entre dispositius",
+      "Recordatoris de pagament compartibles",
       "Exportació i importació JSON",
       "Càlcul automàtic de deutes mínims"
     ],
@@ -1062,12 +1063,12 @@
         </div>
 
         <h1 class="hero__title">
-          Reparteix despeses compartides <em>amb sync privat i sense comptes</em>
+          Reparteix despeses compartides <em>amb sync privat, recordatoris i sense comptes</em>
         </h1>
 
         <p class="hero__subtitle">
-          Per a viatges, pisos i grups. Funciona offline, guarda les dades al teu dispositiu
-          i ara permet sincronitzar entre mòbils o ordinadors amb xifrat punt a punt.
+          Per a viatges, pisos i grups. Funciona offline, guarda les dades al teu dispositiu,
+          et deixa compartir recordatoris de pagament i sincronitza entre mòbils o ordinadors amb xifrat punt a punt.
         </p>
 
         <div class="hero__ctas">
@@ -1258,11 +1259,20 @@
       </article>
 
       <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">📤</div>
+        <h3 class="feature-card__title">Compartir recordatoris de pagament</h3>
+        <p class="feature-card__desc">
+          Des de les transferències suggerides pots enviar un missatge preparat perquè qui deu diners
+          sàpiga exactament quant ha de pagar i a qui.
+        </p>
+      </article>
+
+      <article class="feature-card" role="listitem">
         <div class="feature-card__icon" aria-hidden="true">🔐</div>
         <h3 class="feature-card__title">Sync P2P xifrat</h3>
         <p class="feature-card__desc">
           Sincronitza un grup entre dos dispositius en temps real amb WebRTC i xifrat AES-GCM.
-          Sense compte, sense backend propi i amb contrasenya de grup.
+          Sense compte, sense backend propi, amb contrasenya de grup i amb millor gestió de grups grans.
         </p>
       </article>
 
@@ -1348,7 +1358,7 @@
           <h3 class="step__title">Sincronitza o liquida</h3>
           <p class="step__desc">
             Quan vulguis continuar en un altre dispositiu o compartir l'estat del grup,
-            fas un sync xifrat. I l'app et continua dient qui ha de pagar a qui.
+            fas un sync xifrat o comparteixes un recordatori de pagament. I l'app et continua dient qui ha de pagar a qui.
           </p>
         </div>
       </li>
@@ -1439,7 +1449,7 @@
           <h3 class="advantage-card__title">Portabilitat i sync reals</h3>
           <p class="advantage-card__desc">
             Pots moure grups entre dispositius amb importació, exportació o sync P2P xifrat,
-            sense convertir això en un sistema pesat ni obligar-te a registrar-te.
+            amb millor tolerància a grups grans i sense convertir això en un sistema pesat ni obligar-te a registrar-te.
           </p>
         </div>
       </div>
@@ -1550,7 +1560,7 @@
         <div class="faq-answer" id="faq-answer-7" role="region" aria-labelledby="faq-btn-7">
           Sí. Ara pots sincronitzar un grup directament entre dispositius amb una sessió
           P2P xifrada i una contrasenya compartida. Si prefereixes un flux més asíncron,
-          també pots compartir-lo amb un enllaç o fer servir exportació i importació.
+          també pots compartir-lo amb un enllaç, enviar recordatoris de pagament o fer servir exportació i importació.
         </div>
       </div>
 
